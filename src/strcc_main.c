@@ -49,7 +49,7 @@ static size_t curl_count_matches(const strcc_lit_cmp *cmp)
 {
     size_t i, n = 0;
     for (i = 0; cmp->candidate[i][0]; ++i) {
-        if (!Curl_strcasecompare(cmp->literal, cmp->candidate[i])) {
+        if (Curl_strcasecompare(cmp->literal, cmp->candidate[i])) {
             ++n;
         }
     }
@@ -94,19 +94,21 @@ int main(int argc, const char *const *argv)
 {
     size_t n, copies = 1000, iterations = 100000;
     count_matches_fn *fn = libc_count_matches;
+    const char *fntype = "libc";
 
     if (argc > 1) {
-        if (!strcmp("apr", argv[1])) {
+        fntype = argv[1];
+        if (!strcmp("apr", fntype)) {
             fn = apr_count_matches;
         }
-        else if (!strcmp("curl", argv[1])) {
+        else if (!strcmp("curl", fntype)) {
             fn = curl_count_matches;
         }
-        else if (!strcmp("libc", argv[1])) {
+        else if (!strcmp("libc", fntype)) {
             fn = libc_count_matches;
         }
         else {
-            fprintf(stderr, "unknown compare variation: '%s'\n", argv[1]);
+            fprintf(stderr, "unknown compare type: '%s'\n", fntype);
             exit(1);
         }
         if (argc > 2) {
@@ -130,6 +132,6 @@ int main(int argc, const char *const *argv)
     (void)argc;
     (void)argv;
     n = iter_cases(fn, httpd_cases, copies, iterations);
-    printf("matches: %ld\n", n);
+    printf("%s: matches: %ld\n", fntype, n);
     return 0;
 }

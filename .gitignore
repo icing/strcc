@@ -85,6 +85,7 @@ m4
 .cache
 
 build/
+src/strcc_bench
 .idea
 README.md.bak
 .env
