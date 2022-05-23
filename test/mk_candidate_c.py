@@ -12,12 +12,19 @@ def up_lo(c: str, low):
 def seesaw_case(s: str):
     return ''.join(up_lo(c, idx & 0x1) for idx, c in enumerate(s))
 
+def typo(c: str, typo):
+    return '@' if (typo) else c
+
+def add_typo(s: str, place):
+    return ''.join(typo(c, idx == place) for idx, c in enumerate(s))
+
 
 def lit_variations(literal: str) -> List[str]:
     return [
         literal, literal, literal,
         literal, literal, literal,
         literal.upper(), literal.lower(), seesaw_case(literal),
+        add_typo(literal, 4), add_typo(literal, 8), add_typo(literal, 12),
         literal+'X', literal[:-1], literal[0],
     ]
 
