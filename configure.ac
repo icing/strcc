@@ -16,8 +16,8 @@
 AC_PREREQ([2.69])
 AC_INIT([strcc], [0.0.1], [stefan@eissing.org])
 
-LT_PREREQ([2.2.6])
-LT_INIT()
+#LT_PREREQ([2.2.6])
+#LT_INIT()
 dnl See versioning rule:
 dnl  http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 AC_SUBST(LT_CURRENT, 11)
